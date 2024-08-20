@@ -48,13 +48,11 @@ func (h *Handler) GetBalance(w http.ResponseWriter, r *http.Request) {
 	accountID := r.URL.Query().Get("account_id")
 	balance, err := h.GetBalanceUseCase.Execute(accountID)
 	if err != nil {
-		// For non-existing account, return 404 with just 0 in the body
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("0"))
 		return
 	}
 
-	// For existing account, return 200 with just the balance in the body
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(strconv.Itoa(balance)))
 }
