@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 env:
-  PROJECT_ID: personal-projects-777-433113
-  GAR_NAME: go-app
+  PROJECT_ID: go-app-433118
+  GAR_NAME: go-ebanx
   GAR_LOCATION: us-central1
   SERVICE: ebanx-service
   REGION: us-central1
