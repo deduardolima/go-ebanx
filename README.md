@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="#sobre">Sobre</a> |
+  <a href="#sobre">Go Ebanx</a> |
   <a href="#tecnologia">Tecnologias</a> |
   <a href="#features">Features</a> |
   <a href="#back">Rodando o back-end</a> |
@@ -10,7 +10,8 @@
   <a href="#voltar">Voltar para o topo ⬆️</a>
 </p>
 
-# Go Ebanx
+<h2 id="sobre"> Go Ebanx</h2> |
+
 
 Este projeto é uma API desenvolvida em Go, seguindo a arquitetura Clean Architecture, para gerenciar operações bancárias básicas como depósitos, saques, transferências e consulta de saldo. Ele disponibiliza uma interface HTTP para interagir com as funcionalidades bancárias.
 
@@ -58,14 +59,17 @@ Este comando irá:
 - Construir a imagem Docker para o projeto.
 - Subir o container na porta 8080.
 
-<h2 id="documentacao">🌐 Documentação da API</h2> |
+<h2 id="documentacao">📖 Documentação da API</h2> |
 
-A documentação interativa da API está disponível via Swagger. Após iniciar o servidor, acesse:
+A documentação da API está disponível via Swagger. Após iniciar o servidor, acesse:
 
 ```bash
-http://localhost:8080/api/swagger/index.html
+http://localhost:8080/swagger/index.html
 
 ```
+Ou:
+- [**Go Ebanx Documentation (Swagger)**](https://ebanx-service-qaetfstifq-uc.a.run.app/api/swagger/index.html)
+
 
 <h2 id="ngrok">🌐 Usando Ngrok</h2> |
 
@@ -93,7 +97,8 @@ Para expor a API localmente utilizando Ngrok, siga os passos abaixo:
 
 A API também está disponível publicamente através do Google Cloud Run. Você pode acessá-la no seguinte link:
 
-- [**Go Ebanx API (Google Cloud Run)**](https://go-ebanx-mqtvq6sklq-uc.a.run.app/)
+- [**Go Ebanx API (Google Cloud Run)**](https://ebanx-service-qaetfstifq-uc.a.run.app/)
+- [**Go Ebanx Documentation (Swagger)**](https://ebanx-service-qaetfstifq-uc.a.run.app/swagger/index.html)
 
 Este link é uma URL temporária.
 
@@ -113,7 +118,10 @@ https://ipkiss.pragmazero.com/
 ```
 
 Após executar os testes, você terá seguinte resultado :
+| Testes |
+|-------|
 
+| <img src="https://github.com/user-attachments/assets/8b430429-f011-46da-99f6-b398c7d99191" alt="Login" width="300"> |
 
 <h2 id="desenvolvedores">👨‍💻 Desenvolvedores</h2> |
 <table>         
@@ -123,8 +131,8 @@ Após executar os testes, você terá seguinte resultado :
         <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/98969787?v=4" width="100px;" alt="Imagem profile Diego Lima desenvolvedor"/>
         <br />
         <sub><b> Diego Lima</b></sub>
-      </a>
     </td>
   </tr>
 </table>
-<a href="#voltar">Voltar para o topo ⬆️</a>
+
+<h2 id="voltar">Voltar para o topo</h2>
