@@ -17,13 +17,11 @@ func TestNewAccount(t *testing.T) {
 		t.Errorf("expected balance to be 100, got %v", account.Balance)
 	}
 
-	// Testando a criação de uma conta com ID vazio
 	_, err = NewAccount("", 100)
 	if err == nil || err.Error() != "invalid account id" {
 		t.Errorf("expected error 'invalid account id', got %v", err)
 	}
 
-	// Testando a criação de uma conta com saldo inicial negativo
 	_, err = NewAccount("123", -100)
 	if err == nil || err.Error() != "initial balance cannot be negative" {
 		t.Errorf("expected error 'initial balance cannot be negative', got %v", err)

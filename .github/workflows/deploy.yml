@@ -27,9 +27,6 @@ jobs:
       - name: Get dependencies
         run: go mod download
 
-      - name: Generate Swagger documentation
-        run: swag init --parseDependency --parseInternal
-
       - name: Run unit tests
         run: go test ./...
 
