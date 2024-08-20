@@ -1,0 +1,162 @@
+basePath: /api
+definitions:
+  web.BalanceResponseDTO:
+    properties:
+      balance:
+        example: 200
+        type: integer
+    type: object
+  web.DepositResponseDTO:
+    properties:
+      destination:
+        properties:
+          balance:
+            example: 200
+            type: integer
+          id:
+            example: "100"
+            type: string
+        type: object
+    type: object
+  web.ErrAccountNotFoundDTO:
+    properties:
+      not_found:
+        example: account not found
+        type: string
+    type: object
+  web.ErrServerErrorDTO:
+    properties:
+      error:
+        example: internal server error
+        type: string
+    type: object
+  web.EventRequestDTO:
+    properties:
+      amount:
+        example: 100
+        type: integer
+      destination:
+        type: string
+      origin:
+        type: string
+      type:
+        example: deposit
+        type: string
+    type: object
+  web.ResetResponseDTO:
+    properties:
+      status:
+        example: OK
+        type: string
+    type: object
+  web.TransferResponseDTO:
+    properties:
+      destination:
+        properties:
+          balance:
+            example: 150
+            type: integer
+          id:
+            example: "200"
+            type: string
+        type: object
+      origin:
+        properties:
+          balance:
+            example: 50
+            type: integer
+          id:
+            example: "100"
+            type: string
+        type: object
+    type: object
+  web.WithdrawResponseDTO:
+    properties:
+      origin:
+        properties:
+          balance:
+            example: 150
+            type: integer
+          id:
+            example: "100"
+            type: string
+        type: object
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para gerenciar operações bancárias como depósitos, saques, transferências
+    e consulta de saldo.
+  title: Go Ebanx API
+  version: "1.0"
+paths:
+  /api/balance:
+    get:
+      description: Retorna o saldo da conta especificada
+      operationId: get-balance
+      parameters:
+      - description: ID da conta
+        in: query
+        name: account_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Saldo da conta
+          schema:
+            $ref: '#/definitions/web.BalanceResponseDTO'
+        "404":
+          description: Conta não encontrada
+          schema:
+            $ref: '#/definitions/web.ErrAccountNotFoundDTO'
+        "500":
+          description: Erro no servidor
+          schema:
+            $ref: '#/definitions/web.ErrServerErrorDTO'
+      summary: Obtém o saldo de uma conta bancária
+      tags:
+      - Operações
+  /api/event:
+    post:
+      consumes:
+      - application/json
+      description: Realiza uma transferência entre contas existentes.
+      operationId: handle-transfer
+      parameters:
+      - description: Event
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/web.EventRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Transferência bem-sucedida
+          schema:
+            $ref: '#/definitions/web.TransferResponseDTO'
+        "404":
+          description: Conta não encontrada
+          schema:
+            $ref: '#/definitions/web.ErrAccountNotFoundDTO'
+        "500":
+          description: Erro no servidor
+          schema:
+            $ref: '#/definitions/web.ErrServerErrorDTO'
+      summary: Transferência entre contas
+      tags:
+      - Operações
+  /api/reset:
+    post:
+      description: Reseta o estado do sistema, deletando todas as contas.
+      operationId: reset-state
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.ResetResponseDTO'
+      summary: Reseta o estado do sistema
+      tags:
+      - Reset
+swagger: "2.0"

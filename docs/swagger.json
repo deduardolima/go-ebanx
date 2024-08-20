@@ -1,0 +1,241 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API para gerenciar operações bancárias como depósitos, saques, transferências e consulta de saldo.",
+        "title": "Go Ebanx API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "paths": {
+        "/api/balance": {
+            "get": {
+                "description": "Retorna o saldo da conta especificada",
+                "tags": [
+                    "Operações"
+                ],
+                "summary": "Obtém o saldo de uma conta bancária",
+                "operationId": "get-balance",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID da conta",
+                        "name": "account_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Saldo da conta",
+                        "schema": {
+                            "$ref": "#/definitions/web.BalanceResponseDTO"
+                        }
+                    },
+                    "404": {
+                        "description": "Conta não encontrada",
+                        "schema": {
+                            "$ref": "#/definitions/web.ErrAccountNotFoundDTO"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro no servidor",
+                        "schema": {
+                            "$ref": "#/definitions/web.ErrServerErrorDTO"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/event": {
+            "post": {
+                "description": "Realiza uma transferência entre contas existentes.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Operações"
+                ],
+                "summary": "Transferência entre contas",
+                "operationId": "handle-transfer",
+                "parameters": [
+                    {
+                        "description": "Event",
+                        "name": "event",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.EventRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Transferência bem-sucedida",
+                        "schema": {
+                            "$ref": "#/definitions/web.TransferResponseDTO"
+                        }
+                    },
+                    "404": {
+                        "description": "Conta não encontrada",
+                        "schema": {
+                            "$ref": "#/definitions/web.ErrAccountNotFoundDTO"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro no servidor",
+                        "schema": {
+                            "$ref": "#/definitions/web.ErrServerErrorDTO"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reset": {
+            "post": {
+                "description": "Reseta o estado do sistema, deletando todas as contas.",
+                "tags": [
+                    "Reset"
+                ],
+                "summary": "Reseta o estado do sistema",
+                "operationId": "reset-state",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/web.ResetResponseDTO"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "web.BalanceResponseDTO": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "integer",
+                    "example": 200
+                }
+            }
+        },
+        "web.DepositResponseDTO": {
+            "type": "object",
+            "properties": {
+                "destination": {
+                    "type": "object",
+                    "properties": {
+                        "balance": {
+                            "type": "integer",
+                            "example": 200
+                        },
+                        "id": {
+                            "type": "string",
+                            "example": "100"
+                        }
+                    }
+                }
+            }
+        },
+        "web.ErrAccountNotFoundDTO": {
+            "type": "object",
+            "properties": {
+                "not_found": {
+                    "type": "string",
+                    "example": "account not found"
+                }
+            }
+        },
+        "web.ErrServerErrorDTO": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "internal server error"
+                }
+            }
+        },
+        "web.EventRequestDTO": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "destination": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "deposit"
+                }
+            }
+        },
+        "web.ResetResponseDTO": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "OK"
+                }
+            }
+        },
+        "web.TransferResponseDTO": {
+            "type": "object",
+            "properties": {
+                "destination": {
+                    "type": "object",
+                    "properties": {
+                        "balance": {
+                            "type": "integer",
+                            "example": 150
+                        },
+                        "id": {
+                            "type": "string",
+                            "example": "200"
+                        }
+                    }
+                },
+                "origin": {
+                    "type": "object",
+                    "properties": {
+                        "balance": {
+                            "type": "integer",
+                            "example": 50
+                        },
+                        "id": {
+                            "type": "string",
+                            "example": "100"
+                        }
+                    }
+                }
+            }
+        },
+        "web.WithdrawResponseDTO": {
+            "type": "object",
+            "properties": {
+                "origin": {
+                    "type": "object",
+                    "properties": {
+                        "balance": {
+                            "type": "integer",
+                            "example": 150
+                        },
+                        "id": {
+                            "type": "string",
+                            "example": "100"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
